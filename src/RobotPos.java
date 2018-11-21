@@ -34,6 +34,15 @@ public class RobotPos{
     }
 
     /**
+     * RobotPos Constructor
+     *
+     * @param toClone The RobotPos to be cloned.
+     */
+    public RobotPos(RobotPos toClone){
+        this(toClone.getX(), toClone.getY(), toClone.getHeading());
+    }
+
+    /**
      * Get X Method.
      *
      * @return The X Position of the Robot

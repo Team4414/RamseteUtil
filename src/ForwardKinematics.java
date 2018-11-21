@@ -1,3 +1,5 @@
+import java.awt.*;
+
 /**
  * Forward Kinematics Class.
  *
@@ -63,7 +65,7 @@ public abstract class ForwardKinematics {
     * @return The current X position of the robot.
     */
    public RobotPos getRobotPos(){
-       return mRobotPos;
+       return new RobotPos(mRobotPos);
    }
     /**
     * Get Delta X Method.
