@@ -128,9 +128,13 @@ public abstract class Ramsete {
      */
     public void update(){
 
-        if (path == null || mSegCount > path.length() - 1){
+        if (path == null || mSegCount >= path.length()){
             //if the path is null or you are done tracking one, reset the controller and do not continue.
             path = null;
+            mConstant = 0;
+            mAngleError = 0;
+            ramv = 0;
+            ramw = 0;
             status = Status.STANDBY;
             mSegCount = -1;
             return;
