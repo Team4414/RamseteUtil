@@ -40,9 +40,7 @@ public abstract class ForwardKinematics {
     *
     * @param wheelRadius Radius of the drive wheels.
     * @param wheelBaseLength Distance between the centers of both wheels.
-    * @param xPos Initial X Position of the Robot.
-    * @param yPos Initial Y Position of the Robot.
-    * @param heading Initial Heading of the Robot.
+    * @param initPos The initial {@link RobotPos} of the robot.
     */
    public ForwardKinematics(double wheelRadius, double wheelBaseLength, double timestep, RobotPos initPos){
        this(wheelRadius, wheelBaseLength, timestep);
@@ -55,9 +53,9 @@ public abstract class ForwardKinematics {
     */
    public void update(){
        mRobotPos = new RobotPos(
-               mXpos += kTimeStep * getDeltaX(),
-               mYpos += kTimeStep * getDeltaY(),
-               mHeading += kTimeStep * getDeltaHeading()
+               mRobotPos.getX() + kTimeStep * getDeltaX(),
+               mRobotPos.getY() + kTimeStep * getDeltaY(),
+               mRobotPos.getHeading() + kTimeStep * getDeltaHeading()
        );
    }
     /**
