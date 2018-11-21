@@ -28,7 +28,7 @@ public abstract class Ramsete {
      * Differentiable Robot Position Inner Class.
      *
      * <p>
-     * Automatically stores three sequential {@link RobotPos.java} Objects and uses these to calculate the first
+     * Automatically stores three sequential {@link RobotPos} Objects and uses these to calculate the first
      * and second derivatives of the position.
      * </p>
      */
@@ -189,6 +189,15 @@ public abstract class Ramsete {
                 ramv + ramw * kWheelBase / 2,
                 ramv - ramw * kWheelBase / 2
         );
+    }
+
+    /**
+     * Get Status Method.
+     *
+     * @return The {@link Status} of the controller.
+     */
+    public Status getStatus(){
+        return status;
     }
 
     /**
