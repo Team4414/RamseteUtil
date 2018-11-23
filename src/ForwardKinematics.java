@@ -73,7 +73,10 @@ public abstract class ForwardKinematics {
     * @return The change in X Position.
     */
    private double getDeltaX(){
-       //Check this link for the equations:
+//       System.out.println((kRadius/2) + "\t"+
+//               getLeftWheelVelocity() + "\t" +
+//               getRightWheelVelocity() + "\t" +
+//               Math.cos(mRobotPos.getHeading()));
        return (kRadius/2) * (getLeftWheelVelocity() + getRightWheelVelocity()) * Math.cos(mRobotPos.getHeading());
    }
     /**

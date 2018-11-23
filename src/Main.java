@@ -1,5 +1,4 @@
 import jaci.pathfinder.Pathfinder;
-import jaci.pathfinder.PathfinderJNI;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.Waypoint;
 import logging.CSVLogger;
@@ -15,28 +14,41 @@ public class Main {
     public static final long kControllerTimestep = 10;
     public static final long kLocalizerTimestep = 10;
 
-    public static final double kWheelBase = 3;
+    public static final double kWheelBase = 3.14;
 
     public static void main(String[] args){
         AutonController mController = new AutonController(kControllerTimestep, kWheelBase);
         Odometery mOdometery = new Odometery(new RobotPos(0,0,0), kLocalizerTimestep, kWheelBase);
 
-        ScheduledExecutorService controller = Executors.newSingleThreadScheduledExecutor();
         ScheduledExecutorService odometery  = Executors.newSingleThreadScheduledExecutor();
-
-        controller.scheduleAtFixedRate(mController, 0, kControllerTimestep, TimeUnit.MILLISECONDS);
-        odometery.scheduleAtFixedRate(mOdometery, 0, kLocalizerTimestep, TimeUnit.MILLISECONDS);
+        ScheduledExecutorService controller = Executors.newSingleThreadScheduledExecutor();
 
         mController.trackPath(generateTraj());
 
-        while (!(mController.getStatus().equals(Ramsete.Status.STANDBY))){}
+        odometery.scheduleAtFixedRate(mOdometery, 0, kLocalizerTimestep, TimeUnit.MILLISECONDS);
+        controller.scheduleAtFixedRate(mController, 0, kControllerTimestep, TimeUnit.MILLISECONDS);
 
-        CSVLogger.logCSV("PositionLog", Odometery.positionLogger.get());
+
+        odometery.execute(mOdometery);
+        controller.execute(mController);
+
+        mController.updateState();
+//        while (mController.getStatus().equals(Ramsete.Status.TRACKING));
+
+        try {
+            Thread.sleep(1000);
+        }catch (Exception e){}
+
+        odometery.shutdown();
+        controller.shutdown();
+
+        CSVLogger.logCSV("PositionLog", mOdometery.positionLogger.get());
     }
 
 
     private static Trajectory generateTraj(){
 
+        System.out.println("Traj Generated");
         Waypoint[] points = new Waypoint[] {
 
                 new Waypoint(0, 0, Pathfinder.d2r(180)),
@@ -56,6 +68,5 @@ public class Main {
                 4, 4, 10000);
 
         return Pathfinder.generate(points, config);
-//        return PathfinderJNI.generateTrajectory(points, config);
     }
 }

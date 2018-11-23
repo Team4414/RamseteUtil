@@ -8,8 +8,10 @@ public class AutonController extends Ramsete implements Runnable{
     public void run(){
         this.update();
 
-        Main.mLeftVelocity = this.getVels().getLeft();
-        Main.mRightVelocity = this.getVels().getRight();
+//        Main.mLeftVelocity = this.getVels().getLeft();
+//        Main.mRightVelocity = this.getVels().getRight();
+        Main.mRightVelocity = 1;
+        Main.mLeftVelocity = 0;
     }
 
     @Override

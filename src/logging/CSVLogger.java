@@ -14,7 +14,7 @@ public class CSVLogger {
     /**
      * The path to a directory where the logged csv files are to be stored in the filesystem.
      */
-    private static final String FILE_PATH = "C:\\Users\\avidh\\Desktop";
+    private static final String FILE_PATH = "C:/Users/avidh/Desktop/";
 
     /**
      * Log CSV Method.

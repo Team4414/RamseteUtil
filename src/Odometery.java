@@ -2,12 +2,10 @@ import logging.Loggable;
 
 public class Odometery extends ForwardKinematics implements Runnable{
 
-    private static final double kWheelRadius = 1;
-    private static double kWheelBase = 1;
+    private static final double kWheelRadius = 1.5;
+    private static double kWheelBase = 3.14;
 
-    public static Loggable positionLogger;
-
-    private ForwardKinematics kine;
+    public Loggable positionLogger;
 
     public Odometery(RobotPos initialPos, double timestep, double wheelBase){
         super(kWheelRadius,wheelBase, timestep, initialPos);
@@ -17,9 +15,10 @@ public class Odometery extends ForwardKinematics implements Runnable{
 
     @Override
     public void run() {
-        kine.update();
+        this.update();
         positionLogger.log();
-        Main.masterPos = kine.getRobotPos();
+//        System.out.println("X Position" + Main.masterPos.getX() + "\t|\tY Position" + Main.masterPos.getY());
+        Main.masterPos = this.getRobotPos();
     }
 
     @Override
@@ -37,10 +36,10 @@ public class Odometery extends ForwardKinematics implements Runnable{
             @Override
             protected LogObject[] collectData() {
                 return new LogObject[]{
+                        new LogObject("Time", System.nanoTime()),
                         new LogObject("X_Position", Main.masterPos.getX()),
                         new LogObject("Y_Position", Main.masterPos.getY()),
                         new LogObject("Heading", Main.masterPos.getHeading())
-
                 };
             }
         };

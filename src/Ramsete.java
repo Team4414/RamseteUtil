@@ -161,6 +161,8 @@ public abstract class Ramsete {
                 mConstant * (Math.cos(mPos.getHeading()) * (mGoal.mCurrentPos.getX() - mPos.getX()) +
                 Math.sin(mPos.getHeading()) * (mGoal.mCurrentPos.getY() - mPos.getY()));
 
+        System.out.println(ramv + "\t" + " | " + ramw);
+
         ramw =  mGoal.getDeriv().getHeading() + kB * path.get(mSegCount).velocity *
                 (Math.sin(mAngleError) / (mAngleError)) * (Math.cos(mPos.getHeading()) *
                 (mGoal.mCurrentPos.getY() - mPos.getY()) - Math.sin(mPos.getHeading()) *
@@ -180,14 +182,23 @@ public abstract class Ramsete {
     }
 
     /**
+     * Update State Method.
+     *
+     * <p>Forces an update of state</p>
+     */
+    public void updateState(){
+        status = (path == null || mSegCount >= path.length()) ? Status.STANDBY : Status.TRACKING;
+    }
+
+    /**
      * Get Velocities Method.
      *
      * @return A Velocity DriveSignal to apply to the drivetrain.
      */
     public DriveSignal getVels(){
         return new DriveSignal(
-                ramv + ramw * kWheelBase / 2,
-                ramv - ramw * kWheelBase / 2
+                ramv + (ramw * (kWheelBase / 2)),
+                ramv - (ramw * (kWheelBase / 2))
         );
     }
 

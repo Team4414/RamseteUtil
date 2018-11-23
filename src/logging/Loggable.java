@@ -23,8 +23,6 @@ public abstract class Loggable {
 
     /**
      * Constructor
-     *
-     * @param keys The labels to the data in the order that they will be passed in on "collectData()".
      */
     public Loggable(){
         log = new Log();
